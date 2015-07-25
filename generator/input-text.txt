@@ -77,6 +77,7 @@ because a is the first atom of this list.
 
 ---
 
+
 @short_text
 
 What is the car of l where
@@ -90,7 +91,21 @@ l is `((a b c) x y z)`
 because `(a b c)` is the first S-expression of this non-empty list.
 
 
+---
 
 
+@short_text
+
+What is the car of l where
+l is 
+`(((hotdogs)) (and) (pickle) relish)`
+
+
+?
+
+((hotdogs)),
+read as:
+"The list of the list of hotdogs. "
+`((hotdogs))` is the first S-expression of l.
 
 
