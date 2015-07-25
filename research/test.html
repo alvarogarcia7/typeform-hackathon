@@ -7,9 +7,8 @@
 
 <body>
 <div id="top"><span class="numerator"></span>/ <span class="denominator"></span></div>
-Here is the iframe <br/>
 <!--iframe id="typeform-iframe" src="https://forms.typeform.io/to/5GziGV5QzI6jLA" width="1280" height="1024"></iframe> -->
-<iframe id="typeform-iframe" src="test-form.html" width="1280" height="1024"></iframe>
+<iframe id="typeform-iframe" src="https://forms.typeform.io/to/VAA-U_nRKG1vZg" width="100%" height="100%" frameBorder="0"></iframe>
 </body>
 
 <style type="text/css">
@@ -29,11 +28,11 @@ Here is the iframe <br/>
 <script type="text/javascript">
 
 var updateNumerator = function(){
- 	$("#top > .numerator").text(answers.correct);
- 	$("#top > .denominator").text(answers.correct + answers.wrong);
+ 	$("#top > .numerator").text(answers.correct.length);
+ 	$("#top > .denominator").text(answers.total);
 }
 
-var answers = {'correct':0,'wrong':0};
+var answers = {'correct':[],'wrong':[], 'total':0};
 	
 	$(document).ready(function(){
 
@@ -43,13 +42,13 @@ var answers = {'correct':0,'wrong':0};
 			//console.log("iframe loaded");
 
 			var answerSize = $("#typeform-iframe").contents().find(".questions").contents().children().size() / 2;
-		 	answers.wrong = answerSize;			
+			answers.total = answerSize;	
 		 	updateNumerator();
 			//convert question text from markdown to html
 
 
 			$.merge(
-				$("#typeform-iframe").contents().find(".question span")
+				$("#typeform-iframe").contents().find(".question > span")
 			,
 				$("#typeform-iframe").contents().find(".description")
 			).each(function(index, current){
@@ -57,15 +56,17 @@ var answers = {'correct':0,'wrong':0};
 					current = $(current);
 					var startText = current.text().substring(0,2);
 					var curText = current.text();
-					var answer = curText.match(/[0-9]/);
+					var answer = curText.match(/Yes|No|True|False/);
 
 					if(answer !== null){
-						curText = current.text().replace(/[0-9];/, "");
+						curText = current.text().replace(/[^;]+;/, "");
 
 						var div = $("<div class='answer'>" + answer + "</div>");
 						$(div).hide();
 
-						$(current[0].parentElement).first().append(div);
+						var destination = $(current[0].parentElement.parentElement).first();
+						console.log("Destination", destination);
+						destination.append(div);
 					}
 
 					current.html(markdown.toHTML(curText));
@@ -77,37 +78,43 @@ var answers = {'correct':0,'wrong':0};
 			 	});
 
 			$("#typeform-iframe").contents().find(".yes-no li.container").click(function(e){
-				//console.log(e);
-				var li = e.target.parentElement.parentElement;
 
-				//console.log ("Parent", parent);
+				window.e = e;
+				var questionId = e.target.parentNode.parentNode.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+				var currentAnswer = $(e.target.parentElement.parentElement).find("span.label").text()
 
-				var currentIndex = 0;
-
-				if(li.nextElementSibling === null){
-					currentIndex = 1;
-				}
-
-				var label = $(".label", parent);
-
-				//console.log("Label text=", label, "index = ", currentIndex);
-
-				//console.log(".answer", li.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
-
-				var answerToCurrentQuestion = $(".answer", li.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).text();
+				var answerToCurrentQuestion = $(e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).find("div.answer").text()
 
 
 				var numerator = $("#top > .numerator");
 				var currentNumerator = Number(numerator.text());
+
+				console.log("answerToCurrentQuestion", answerToCurrentQuestion)
 				
 				//important to make it double =, not triple
-				if(currentIndex == answerToCurrentQuestion){
-					answers.wrong--;
-					answers.correct++;
+				if(currentAnswer == answerToCurrentQuestion){
+
+					var index = answers.correct.indexOf(questionId);
+					if (index == -1) {
+					    answers.correct.push(questionId);
+					}
+
+					var index = answers.wrong.indexOf(questionId);
+					if (index > -1) {
+					    answers.wrong.splice(index, 1);
+					}
 					updateNumerator();
 				} else {
-					answers.wrong++;
-					answers.correct--;
+
+					var index = answers.wrong.indexOf(questionId);
+					if (index == -1) {
+					    answers.wrong.push(questionId);
+					}
+
+					var index = answers.correct.indexOf(questionId);
+					if (index > -1) {
+					    answers.correct.splice(index, 1);
+					}
 					updateNumerator();
 				}
 
