@@ -33,7 +33,7 @@ var get_params = function(search_string) {
 
 <body>
 <div id="top"><span class="numerator"></span>/ <span class="denominator"></span></div>
-<div id="spinner"></div>
+<div style="width:100%; height:100%"><div id="spinner">&nbsp;</div></div>
 <!--iframe id="typeform-iframe" src="https://forms.typeform.io/to/5GziGV5QzI6jLA" width="1280" height="1024"></iframe> -->
 <iframe id="typeform-iframe" width="100%" height="100%" frameBorder="0"></iframe>
 </body>
@@ -63,7 +63,13 @@ $("#typeform-iframe")[0].src= params;
 }
 
 #spinner {
-
+	background-image: url("spinners.gif");
+	width: 400px;
+    height: 300px;
+    margin: auto;
+	vertical-align: text-top;
+	position: relative;
+	top: 30%;
 }
 </style>
 
@@ -84,6 +90,7 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 
 		$("#typeform-iframe")[0].onload = function(){
 			$("#top").show();
+			$("#spinner").parent().hide();
 			//console.log("iframe loaded");
 
 			var answerSize = $("#typeform-iframe").contents().find(".questions").contents().children().size() / 2;
