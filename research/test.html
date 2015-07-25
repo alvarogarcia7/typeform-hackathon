@@ -33,13 +33,21 @@ var get_params = function(search_string) {
 
 <body>
 <div id="top"><span class="numerator"></span>/ <span class="denominator"></span></div>
+<div id="spinner"></div>
 <!--iframe id="typeform-iframe" src="https://forms.typeform.io/to/5GziGV5QzI6jLA" width="1280" height="1024"></iframe> -->
 <iframe id="typeform-iframe" width="100%" height="100%" frameBorder="0"></iframe>
 </body>
 
 <script type="text/javascript">
-var params = get_params(location.search).form || "VAA-U_nRKG1vZg";
-$("#typeform-iframe")[0].src="https://forms.typeform.io/to/" + params;
+var params = get_params(location.search).form;
+
+if(params) {
+	params = "https://forms.typeform.io/to/" + params;
+} else {
+	params = "test-form.html";
+}
+
+$("#typeform-iframe")[0].src= params;
 </script>
 
 <style type="text/css">
@@ -52,6 +60,10 @@ $("#typeform-iframe")[0].src="https://forms.typeform.io/to/" + params;
 	height: 10%;
 	font-size: 41pt;
 	display: none;
+}
+
+#spinner {
+
 }
 </style>
 
