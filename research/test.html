@@ -27,14 +27,29 @@ Here is the iframe <br/>
 
 			//convert question text from markdown to html
 
-			$.merge(
-				$("#typeform-iframe").contents().find(".yes-no .question span")
-			,
-				$("#typeform-iframe").contents().find(".yes-no .description")
-			).each(function(index, current){
-					current = $(current);
-					current.html(markdown.toHTML(current.text()));
 
+			$.merge(
+				$("#typeform-iframe").contents().find(".question span")
+			,
+				$("#typeform-iframe").contents().find(".description")
+			).each(function(index, current){
+
+					current = $(current);
+					var startText = current.text().substring(0,2);
+					var curText = current.text();
+					var answer = curText.match(/[0-9]/);
+
+					if(answer !== null){
+						curText = current.text().replace(/[0-9];/, "");
+
+						var div = $("<div class='answer'>" + answer + "</div>");
+						$(div).hide();
+
+						$(current[0].parentElement).first().append(div);
+					}
+
+					current.html(markdown.toHTML(curText));
+					
 					current.contents().find("code").each(function(index, current){
 				 		$(current).css({'font-family': 'Courier, monospace'});
 				 	});
