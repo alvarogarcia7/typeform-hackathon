@@ -5,6 +5,10 @@ _ = require 'underscore'
 
 trimstr = (s) -> s.replace(/^\s+/, '').replace(/\s+$/, '')
 
+prepareStr = (s) ->
+	s = trimstr s
+	s = s.replace /`/g, "```"
+
 toTypeForm = (contents) ->
 	qas = contents.split '\n---\n'
 
@@ -22,8 +26,8 @@ toTypeForm = (contents) ->
 
 	makeDesc = (lines) ->
 		result = 
-			question: trimstr lines.shift()
-			description: trimstr lines.join('\n')
+			question: prepareStr lines.shift()
+			description: prepareStr lines.join('\n')
 
 	parseQuestion = (q) ->
 		q = q.filter nonEmpty
