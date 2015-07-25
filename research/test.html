@@ -3,13 +3,44 @@
 <head>
 <script src="jquery.js"></script>
 <script src="markdown.min.js"></script>
+
+<script type="text/javascript">
+	
+var get_params = function(search_string) {
+
+  var parse = function(params, pairs) {
+    var pair = pairs[0];
+    var parts = pair.split('=');
+    var key = decodeURIComponent(parts[0]);
+    var value = decodeURIComponent(parts.slice(1).join('='));
+
+    // Handle multiple parameters of the same name
+    if (typeof params[key] === "undefined") {
+      params[key] = value;
+    } else {
+      params[key] = [].concat(params[key], value);
+    }
+
+    return pairs.length == 1 ? params : parse(params, pairs.slice(1))
+  }
+
+  // Get rid of leading ?
+  return search_string.length == 0 ? {} : parse({}, search_string.substr(1).split('&'));
+}
+
+</script>
 </head>
 
 <body>
 <div id="top"><span class="numerator"></span>/ <span class="denominator"></span></div>
 <!--iframe id="typeform-iframe" src="https://forms.typeform.io/to/5GziGV5QzI6jLA" width="1280" height="1024"></iframe> -->
-<iframe id="typeform-iframe" src="https://forms.typeform.io/to/VAA-U_nRKG1vZg" width="100%" height="100%" frameBorder="0"></iframe>
+<iframe id="typeform-iframe" width="100%" height="100%" frameBorder="0"></iframe>
 </body>
+
+<script type="text/javascript">
+var params = get_params(location.search).form || "VAA-U_nRKG1vZg";
+$("#typeform-iframe")[0].src="https://forms.typeform.io/to/" + params;
+</script>
 
 <style type="text/css">
 #top {
@@ -20,6 +51,7 @@
 	width: 15%;
 	height: 10%;
 	font-size: 41pt;
+	display: none;
 }
 </style>
 
@@ -39,6 +71,7 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 		console.log("Ready");
 
 		$("#typeform-iframe")[0].onload = function(){
+			$("#top").show();
 			//console.log("iframe loaded");
 
 			var answerSize = $("#typeform-iframe").contents().find(".questions").contents().children().size() / 2;
@@ -65,7 +98,6 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 						$(div).hide();
 
 						var destination = $(current[0].parentElement.parentElement).first();
-						console.log("Destination", destination);
 						destination.append(div);
 					}
 
