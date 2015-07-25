@@ -98,19 +98,21 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 		 	updateNumerator();
 			//convert question text from markdown to html
 
-
 			$.merge(
-				$("#typeform-iframe").contents().find(".question > span")
-			,
-				$("#typeform-iframe").contents().find(".description")
+				$.merge(
+					$("#typeform-iframe").contents().find(".question > span"),
+					$("#typeform-iframe").contents().find(".description")),
+				$("#typeform-iframe").contents().find("input")
 			).each(function(index, current){
 
 					current = $(current);
 					var startText = current.text().substring(0,2);
 					var curText = current.text();
-					var answer = curText.match(/Yes|No|True|False/);
+					var answer = curText.match(/[^,]+,/);
 
 					if(answer !== null){
+						console.log(answer[0]);
+						answer = answer[0].replace(",","");
 						curText = current.text().replace(/[^;]+;/, "");
 
 						var div = $("<div class='answer'>" + answer + "</div>");
@@ -128,6 +130,25 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 
 			 	});
 
+
+
+
+			$("#typeform-iframe").contents().find(".content").click(function(e){
+				$("#typeform-iframe").contents().find(".container .confirm").click(function(f){
+					window.f = f;
+
+					var currentAnswer = $(f.target.parentElement.parentElement.parentElement.parentElement).find("input")[0].value;
+
+					var answerToCurrentQuestion = $(f.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).find("div.answer").text()
+
+					var questionId = f.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+
+					checkAndUpdate(currentAnswer, answerToCurrentQuestion, questionId);
+
+				});
+
+			});
+
 			$("#typeform-iframe").contents().find(".yes-no li.container").click(function(e){
 
 				window.e = e;
@@ -142,32 +163,7 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 
 				console.log("answerToCurrentQuestion", answerToCurrentQuestion)
 				
-				//important to make it double =, not triple
-				if(currentAnswer == answerToCurrentQuestion){
-
-					var index = answers.correct.indexOf(questionId);
-					if (index == -1) {
-					    answers.correct.push(questionId);
-					}
-
-					var index = answers.wrong.indexOf(questionId);
-					if (index > -1) {
-					    answers.wrong.splice(index, 1);
-					}
-					updateNumerator();
-				} else {
-
-					var index = answers.wrong.indexOf(questionId);
-					if (index == -1) {
-					    answers.wrong.push(questionId);
-					}
-
-					var index = answers.correct.indexOf(questionId);
-					if (index > -1) {
-					    answers.correct.splice(index, 1);
-					}
-					updateNumerator();
-				}
+				checkAndUpdate(currentAnswer, answerToCurrentQuestion, questionId);
 
 				//console.log("answerToCurrentQuestion", answerToCurrentQuestion);
 
@@ -176,6 +172,35 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 		}
 
 	});
+
+var checkAndUpdate = function(currentAnswer, answerToCurrentQuestion, questionId){
+	//important to make it double =, not triple
+	if(currentAnswer == answerToCurrentQuestion){
+
+		var index = answers.correct.indexOf(questionId);
+		if (index == -1) {
+		    answers.correct.push(questionId);
+		}
+
+		var index = answers.wrong.indexOf(questionId);
+		if (index > -1) {
+		    answers.wrong.splice(index, 1);
+		}
+		updateNumerator();
+	} else {
+
+		var index = answers.wrong.indexOf(questionId);
+		if (index == -1) {
+		    answers.wrong.push(questionId);
+		}
+
+		var index = answers.correct.indexOf(questionId);
+		if (index > -1) {
+		    answers.correct.splice(index, 1);
+		}
+		updateNumerator();
+	}
+}
 
 </script>
 
