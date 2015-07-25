@@ -1,3 +1,6 @@
+#takes a file from the command line, converts it into a typeForm form and submits it to the TypeForm.io server
+#Receives a reply with the TypeForm form ID and stuff
+
 request = require 'request'
 fs = require 'fs'
 toTypeForm = require './to-typeform'
