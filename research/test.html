@@ -21,7 +21,7 @@ Here is the iframe <br/>
 		console.log("Ready");
 
 		$("#typeform-iframe")[0].onload = function(){
-			console.log("iframe loaded");
+			//console.log("iframe loaded");
 
 			
 
@@ -56,10 +56,10 @@ Here is the iframe <br/>
 			 	});
 
 			$("#typeform-iframe").contents().find(".yes-no li.container").click(function(e){
-				console.log(e);
+				//console.log(e);
 				var li = e.target.parentElement.parentElement;
 
-				console.log ("Parent", parent);
+				//console.log ("Parent", parent);
 
 				var currentIndex = 0;
 
@@ -69,9 +69,9 @@ Here is the iframe <br/>
 
 				var label = $(".label", parent);
 
-				console.log("Label text=", label, "index = ", currentIndex);
+				//console.log("Label text=", label, "index = ", currentIndex);
 
-				console.log(".answer", li.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
+				//console.log(".answer", li.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
 
 				var answerToCurrentQuestion = $(".answer", li.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).text();
 
@@ -82,7 +82,7 @@ Here is the iframe <br/>
 					console.log("YOU LOST");
 				}
 
-				console.log("answerToCurrentQuestion", answerToCurrentQuestion);
+				//console.log("answerToCurrentQuestion", answerToCurrentQuestion);
 
 				//$(".content .control li"
 			});
