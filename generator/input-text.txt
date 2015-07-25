@@ -1,0 +1,96 @@
+
+Is it true that this is an atom?
+`atom1`
+
+?
+
+Yes,
+because atom is a string of characters beginning with the letter a.
+
+
+---
+
+Is it true that this is an atom?
+`turkey`
+
+?
+
+Yes,
+because turkey is a string of characters beginning with a letter.
+
+
+---
+
+
+Is it true that this is an atom?
+`1492`
+
+?
+
+Yes,
+because 1492 is a string of digits.
+
+---
+
+Is it true that this is an atom?
+`u`
+
+?
+
+Yes,
+because u is a string of one character, which is a letter.
+
+---
+
+Is it true that this is an atom?
+`abc$`
+
+?
+
+Yes,
+because •abc$ is a string of characters beginning with a letter or special character other than a left " (" or right " )" parenthesis.
+
+---
+
+Is it true that this is a list?
+`(atom)1
+	(atom turkey or)`
+
+?
+
+Yes,
+because (atom) is an atom enclosed by parentheses.
+
+
+---
+
+@short_text
+
+What is the car of l where l is the argument
+`(a b c)`
+
+?
+
+a,
+because a is the first atom of this list.
+
+
+---
+
+@short_text
+
+What is the car of l where
+l is `((a b c) x y z)`
+
+
+?
+
+
+(abc),
+because `(a b c)` is the first S-expression of this non-empty list.
+
+
+
+
+
+

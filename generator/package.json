@@ -1,0 +1,16 @@
+{
+  "name": "generator",
+  "version": "1.0.0",
+  "description": "Generate typeform json from DSL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "minimist": "^1.1.2",
+    "request": "^2.60.0",
+    "underscore": "^1.8.3"
+  }
+}
