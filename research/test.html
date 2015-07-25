@@ -167,7 +167,7 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 				var questionId = e.target.parentNode.parentNode.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id;
 				var currentAnswer = $(e.target.parentElement.parentElement).find("span.label").text()
 
-				var answerToCurrentQuestion = $(e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).find("div.answer").text()
+				var answerToCurrentQuestion = $($(e.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).find("div.answer")[0]).text()
 
 
 				var numerator = $("#top > .numerator");
