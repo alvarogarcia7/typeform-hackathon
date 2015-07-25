@@ -2,6 +2,7 @@
 
 <head>
 <script src="jquery.js"></script>
+<script src="markdown.min.js"></script>
 </head>
 
 <body>
@@ -12,12 +13,40 @@ Here is the iframe <br/>
 
 
 <script type="text/javascript">
+
+
 	
 	$(document).ready(function(){
+
+		var md_content = "Hello.\n\n* This is markdown.\n* It is fun\n* Love it or leave it."
+		var html_content = markdown.toHTML( md_content );
+		console.log(html_content);
+
+
 		console.log("Ready");
 
 		$("#typeform-iframe")[0].onload = function(){
 			console.log("iframe loaded");
+
+			
+
+			//convert question text from markdown to html
+
+			$.merge(
+				$("#typeform-iframe").contents().find(".yes-no .question span")
+			,
+				$("#typeform-iframe").contents().find(".yes-no .description")
+			).each(function(index, current){
+					current = $(current);
+					current.html(markdown.toHTML(current.text()));
+			 	});
+
+			 	$("#typeform-iframe").contents().find("code")
+			.each(function(index, current){
+				 	$(current).css({'font-family': 'Courier, monospace'});
+				 });
+
+
 			$("#typeform-iframe").contents().find(".yes-no li.container").click(function(e){
 				console.log(e);
 				var parent = e.target.parentElement.parentElement;
