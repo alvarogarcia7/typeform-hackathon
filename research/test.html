@@ -32,6 +32,7 @@ var get_params = function(search_string) {
 </head>
 
 <body>
+<div id="header"></div>
 <div id="top"><span class="numerator"></span>/ <span class="denominator"></span></div>
 <div style="width:100%; height:100%"><div id="spinner">&nbsp;</div></div>
 <!--iframe id="typeform-iframe" src="https://forms.typeform.io/to/5GziGV5QzI6jLA" width="1280" height="1024"></iframe> -->
@@ -48,6 +49,8 @@ if(params) {
 }
 
 $("#typeform-iframe")[0].src= params;
+
+$("#header").text(get_params(location.search).title||"Welcome to the First Chapter!");
 </script>
 
 <style type="text/css">
@@ -71,6 +74,14 @@ $("#typeform-iframe")[0].src= params;
 	position: relative;
 	top: 30%;
 }
+
+#header {
+	width: 100%;
+    font-size: 50px;
+    text-align: center;
+    font-variant: small-caps;
+    display: none;
+}
 </style>
 
 
@@ -90,6 +101,7 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 
 		$("#typeform-iframe")[0].onload = function(){
 			$("#top").show();
+			$("#header").show();
 			$("#spinner").parent().hide();
 			//console.log("iframe loaded");
 
