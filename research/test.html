@@ -6,15 +6,34 @@
 </head>
 
 <body>
+<div id="top"><span class="numerator"></span>/ <span class="denominator"></span></div>
 Here is the iframe <br/>
 <!--iframe id="typeform-iframe" src="https://forms.typeform.io/to/5GziGV5QzI6jLA" width="1280" height="1024"></iframe> -->
 <iframe id="typeform-iframe" src="test-form.html" width="1280" height="1024"></iframe>
 </body>
 
+<style type="text/css">
+#top {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 999;
+	width: 15%;
+	height: 10%;
+	font-size: 41pt;
+}
+</style>
+
+
 
 <script type="text/javascript">
 
+var updateNumerator = function(){
+ 	$("#top > .numerator").text(answers.correct);
+ 	$("#top > .denominator").text(answers.correct + answers.wrong);
+}
 
+var answers = {'correct':0,'wrong':0};
 	
 	$(document).ready(function(){
 
@@ -23,8 +42,9 @@ Here is the iframe <br/>
 		$("#typeform-iframe")[0].onload = function(){
 			//console.log("iframe loaded");
 
-			
-
+			var answerSize = $("#typeform-iframe").contents().find(".questions").contents().children().size() / 2;
+		 	answers.wrong = answerSize;			
+		 	updateNumerator();
 			//convert question text from markdown to html
 
 
@@ -53,6 +73,7 @@ Here is the iframe <br/>
 					current.contents().find("code").each(function(index, current){
 				 		$(current).css({'font-family': 'Courier, monospace'});
 				 	});
+
 			 	});
 
 			$("#typeform-iframe").contents().find(".yes-no li.container").click(function(e){
@@ -75,11 +96,19 @@ Here is the iframe <br/>
 
 				var answerToCurrentQuestion = $(".answer", li.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).text();
 
+
+				var numerator = $("#top > .numerator");
+				var currentNumerator = Number(numerator.text());
+				
 				//important to make it double =, not triple
 				if(currentIndex == answerToCurrentQuestion){
-					console.log("YOU WON");
+					answers.wrong--;
+					answers.correct++;
+					updateNumerator();
 				} else {
-					console.log("YOU LOST");
+					answers.wrong++;
+					answers.correct--;
+					updateNumerator();
 				}
 
 				//console.log("answerToCurrentQuestion", answerToCurrentQuestion);
