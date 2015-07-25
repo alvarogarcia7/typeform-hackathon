@@ -169,6 +169,14 @@ var answers = {'correct':[],'wrong':[], 'total':0};
 
 				//$(".content .control li"
 			});
+
+			$("#typeform-iframe").contents().find(".description  code").each(function(index, current){
+
+					current = $(current);
+					var curText = current.text();
+					current.text(curText.trim());
+			});
+
 		}
 
 	});
