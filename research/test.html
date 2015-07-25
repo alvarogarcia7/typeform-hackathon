@@ -75,6 +75,7 @@ Here is the iframe <br/>
 
 				var answerToCurrentQuestion = $(".answer", li.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.nextElementSibling).text();
 
+				//important to make it double =, not triple
 				if(currentIndex == answerToCurrentQuestion){
 					console.log("YOU WON");
 				} else {
