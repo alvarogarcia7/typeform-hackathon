@@ -34,13 +34,11 @@ Here is the iframe <br/>
 			).each(function(index, current){
 					current = $(current);
 					current.html(markdown.toHTML(current.text()));
+
+					current.contents().find("code").each(function(index, current){
+				 		$(current).css({'font-family': 'Courier, monospace'});
+				 	});
 			 	});
-
-			 	$("#typeform-iframe").contents().find("code")
-			.each(function(index, current){
-				 	$(current).css({'font-family': 'Courier, monospace'});
-				 });
-
 
 			$("#typeform-iframe").contents().find(".yes-no li.container").click(function(e){
 				console.log(e);
