@@ -1,0 +1,39 @@
+<html>
+
+<head>
+<script src="jquery.js"></script>
+</head>
+
+<body>
+Here is the iframe <br/>
+<!--iframe id="typeform-iframe" src="https://forms.typeform.io/to/5GziGV5QzI6jLA" width="1280" height="1024"></iframe> -->
+<iframe id="typeform-iframe" src="test-form.html" width="1280" height="1024"></iframe>
+</body>
+
+
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+		console.log("Ready");
+
+		$("#typeform-iframe")[0].onload = function(){
+			console.log("iframe loaded");
+			$("#typeform-iframe").contents().find(".yes-no li.container").click(function(e){
+				console.log(e);
+				var parent = e.target.parentElement.parentElement;
+
+				console.log ("Parent", parent);
+
+
+				var label = $(".label", parent)
+
+				console.log("Label text=", label.text());
+				//$(".content .control li"
+			});
+		}
+
+	});
+
+</script>
+
+</html>
