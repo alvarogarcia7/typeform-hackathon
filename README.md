@@ -1,6 +1,6 @@
 # typeform-hackathon
 
-To execute it, go to research and
+To execute it, go to the folder ``research`` and
 
 ```bash
 static .
